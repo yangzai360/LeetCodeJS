@@ -3,7 +3,36 @@
  * @return {string}
  */
 var longestPalindrome = function(s) {
-    
+    if (s.length === 0) {
+        return ''
+    } else if (s.length === 1) {
+        return s;
+    } else {
+        let minStart = 0;
+        let maxLen = 1;
+        let i = 0;
+        while (i < s.length) {
+            if (s.length - 1 <= maxLen / 2) {
+                break
+            }
+            let j = i;
+            let k = i;
+            while (k < s.length - 1 && s.charAt(k + 1) === s.charAt(k)) {
+                k += 1
+            }
+            i = k + 1;
+            while (k < s.length - 1 && j > 0 && s.charAt(k + 1) === s.charAt(j - 1)) {
+                k += 1;
+                j -= 1;
+            }
+            let newLen = k - j + 1;
+            if (newLen > maxLen) {
+                minStart = j;
+                maxLen = newLen;
+            }
+        }
+        return s.substr(minStart, maxLen);
+    }
 };
 
 /*
